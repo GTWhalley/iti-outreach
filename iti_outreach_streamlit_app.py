@@ -139,7 +139,10 @@ if submitted:
     final_prompt += f"\n\n{industry_context}\n\n{persona_context}"
 
     st.success("Prompt generated below:")
-    st.markdown(f'''
-        <textarea id="promptText" style="width: 100%; height: 300px;">{final_prompt}</textarea>
-        <button onclick="navigator.clipboard.writeText(document.getElementById('promptText').value)">Copy to Clipboard</button>
-    ''', unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style="margin-bottom: 1rem;">
+            <textarea id="promptText" style="width: 100%; height: 300px; border-radius: 6px; padding: 10px;">{final_prompt}</textarea>
+        </div>
+        <button style="padding: 6px 12px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText(document.getElementById('promptText').value)">📋 Copy to Clipboard</button>
+    """, unsafe_allow_html=True)
+
