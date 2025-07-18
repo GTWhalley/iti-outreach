@@ -1,10 +1,9 @@
-
 import streamlit as st
 
 # -----------------------------
 # Simple password protection
 # -----------------------------
-PASSWORD = "iti2024"
+PASSWORD = "iti2025"
 
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
