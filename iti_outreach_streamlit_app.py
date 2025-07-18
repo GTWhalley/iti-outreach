@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_copy_to_clipboard import copy_to_clipboard  # ✅ Added this import
 
 # -----------------------------
 # Simple password protection
@@ -118,7 +119,6 @@ with st.form("prompt_form"):
         lead = st.text_input("Lead Name")
         title = st.text_input("Job Title")
         location = st.text_input("Location")
-        
 
     with col2:
         industry = st.selectbox("Industry", industries)
@@ -130,7 +130,6 @@ with st.form("prompt_form"):
     submitted = st.form_submit_button("Generate Prompt")
 
 if submitted:
-    
     header = get_prompt_header(lead, company, location, title, persona, size, industry, tone, solution)
     industry_context = industry_snippets.get(industry, "")
     persona_context = persona_snippets.get(persona, "")
@@ -139,6 +138,4 @@ if submitted:
 
     st.success("Prompt generated below:")
     st.text_area("Generated Prompt", value=final_prompt, height=400, key="prompt_box")
-    st.markdown("""
-        <button style="padding: 6px 12px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText(document.getElementsByName('prompt_box')[0].value)">📋 Copy to Clipboard</button>
-    """, unsafe_allow_html=True)
+    copy_to_clipboard(final_prompt, "📋 Copy to Clipboard")  # ✅ Replaced the HTML version
