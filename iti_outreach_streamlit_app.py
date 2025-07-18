@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_copy_to_clipboard import copy_to_clipboard  # ✅ Added this import
 
 # -----------------------------
 # Simple password protection
@@ -137,5 +136,5 @@ if submitted:
     final_prompt += f"\n\n{industry_context}\n\n{persona_context}"
 
     st.success("Prompt generated below:")
-    st.text_area("Generated Prompt", value=final_prompt, height=400, key="prompt_box")
-    copy_to_clipboard(final_prompt, "📋 Copy to Clipboard")  # ✅ Replaced the HTML version
+    st.code(final_prompt, language="markdown")
+
