@@ -140,6 +140,6 @@ if submitted:
     st.text_area("Generated Prompt", value=final_prompt, height=400, key="output")
 
     # Add a helpful hint for the user to select/copy
-    st.markdown("✅ Select all and press **Ctrl+C** (or Cmd+C on Mac) to copy the generated prompt then paste it into ChatGPT. \nNOTE: Make sure to review that the output from ChatGPT is satisfactory before sending the email! LLMs have a mind of their own at times.")
-
+    st.markdown("✅ Select all and press **Ctrl+C** (or Cmd+C on Mac) to copy the generated prompt then paste it into ChatGPT.")
+    st.markdown("⚠️ NOTE: Make sure to review that the output from ChatGPT is satisfactory before sending the email! LLMs have a mind of their own at times.")
 
