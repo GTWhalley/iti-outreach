@@ -136,5 +136,10 @@ if submitted:
     final_prompt += f"\n\n{industry_context}\n\n{persona_context}"
 
     st.success("Prompt generated below:")
-    st.code(final_prompt, language="markdown")
+    # Display the generated prompt in a selectable text area
+    st.text_area("Generated Prompt", value=final_prompt, height=400, key="output")
+
+    # Add a helpful hint for the user to select/copy
+    st.markdown("✅ Select all and press **Ctrl+C** (or Cmd+C on Mac) to copy the generated prompt.")
+
 
