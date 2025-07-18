@@ -138,5 +138,8 @@ if submitted:
     final_prompt = header.strip()
     final_prompt += f"\n\n{industry_context}\n\n{persona_context}"
 
-    st.success("Prompt generated! Use the button below to download.")
-    st.download_button("Download Prompt File", final_prompt.encode("utf-8"), file_name=filename, mime="text/plain")
+    st.success("Prompt generated below:")
+    st.markdown(f'''
+        <textarea id="promptText" style="width: 100%; height: 300px;">{final_prompt}</textarea>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('promptText').value)">Copy to Clipboard</button>
+    ''', unsafe_allow_html=True)
