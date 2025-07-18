@@ -18,13 +18,6 @@ if not st.session_state["authenticated"]:
     st.stop()
 
 # -----------------------------
-# Initialize session state for all input fields
-# -----------------------------
-for key in ["company", "lead", "title", "location", "filename", "industry", "persona", "size", "tone", "solution"]:
-    if key not in st.session_state:
-        st.session_state[key] = ""
-
-# -----------------------------
 # Data
 # -----------------------------
 industries = [
@@ -121,18 +114,18 @@ st.title("ITI Outreach Prompt Generator")
 with st.form("prompt_form"):
     col1, col2 = st.columns(2)
     with col1:
-        company = st.text_input("Company Name", value=st.session_state["company"], key="company")
-        lead = st.text_input("Lead Name", value=st.session_state["lead"], key="lead")
-        title = st.text_input("Job Title", value=st.session_state["title"], key="title")
-        location = st.text_input("Location", value=st.session_state["location"], key="location")
-        filename = st.text_input("Output Filename", value=st.session_state["filename"] or f"{st.session_state['company']}_prompt.txt", key="filename")
+        company = st.text_input("Company Name")
+        lead = st.text_input("Lead Name")
+        title = st.text_input("Job Title")
+        location = st.text_input("Location")
+        filename = st.text_input("Output Filename", f"{company}_prompt.txt")
 
     with col2:
-        industry = st.selectbox("Industry", industries, index=industries.index(st.session_state["industry"]) if st.session_state["industry"] in industries else 0, key="industry")
-        persona = st.selectbox("Persona", personas, index=personas.index(st.session_state["persona"]) if st.session_state["persona"] in personas else 0, key="persona")
-        size = st.selectbox("Company Size", company_sizes, index=company_sizes.index(st.session_state["size"]) if st.session_state["size"] in company_sizes else 0, key="size")
-        tone = st.selectbox("Tone", tones, index=tones.index(st.session_state["tone"]) if st.session_state["tone"] in tones else 0, key="tone")
-        solution = st.selectbox("Solution", solutions, index=solutions.index(st.session_state["solution"]) if st.session_state["solution"] in solutions else 0, key="solution")
+        industry = st.selectbox("Industry", industries)
+        persona = st.selectbox("Persona", personas)
+        size = st.selectbox("Company Size", company_sizes)
+        tone = st.selectbox("Tone", tones)
+        solution = st.selectbox("Solution", solutions)
 
     submitted = st.form_submit_button("Generate Prompt")
 
@@ -147,8 +140,3 @@ if submitted:
 
     st.success("Prompt generated! Use the button below to download.")
     st.download_button("Download Prompt File", final_prompt.encode("utf-8"), file_name=filename, mime="text/plain")
-
-    # Clear fields and rerun
-    for key in ["company", "lead", "title", "location", "filename", "industry", "persona", "size", "tone", "solution"]:
-        st.session_state[key] = ""
-    st.rerun()
