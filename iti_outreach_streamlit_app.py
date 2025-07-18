@@ -1,3 +1,4 @@
+
 import streamlit as st
 
 # -----------------------------
@@ -42,7 +43,6 @@ solutions = [
     "Quality Management", "Maintenance Management", "Inventory Tracking",
     "ERP Integration", "SCADA & IIoT Integration", "Unspecified"
 ]
-lead_sources = ["LinkedIn", "Bid/tender portal", "Industry event", "Referral", "Other"]
 
 industry_snippets = {
     "Food & Beverage": "This sector prioritizes traceability, batch control, and minimizing downtime in high-throughput environments. ITI helps enable compliant, responsive operations across diverse product lines.",
@@ -66,10 +66,6 @@ persona_snippets = {
     "Automation Lead": "Automation Leads focus on streamlining manual processes and controls. ITI helps design and implement connected control systems using best-in-class platforms.",
     "Production Supervisor": "Production Supervisors keep lines running smoothly. ITI’s visibility tools provide clear KPIs, downtime logs, and performance views right from the shop floor."
 }
-
-# -----------------------------
-# Functions
-# -----------------------------
 
 def get_prompt_header(lead, company, location, title, persona, size, industry, tone, solution):
     if solution == "Unspecified":
@@ -119,28 +115,18 @@ st.title("ITI Outreach Prompt Generator")
 with st.form("prompt_form"):
     col1, col2 = st.columns(2)
     with col1:
-        company = st.text_input("Company Name")
-        lead = st.text_input("Lead Name")
-        title = st.text_input("Job Title")
-        location = st.text_input("Location")
-        filename = st.text_input("Output Filename", f"{company}_prompt.txt")
+        company = st.text_input("Company Name", key="company")
+        lead = st.text_input("Lead Name", key="lead")
+        title = st.text_input("Job Title", key="title")
+        location = st.text_input("Location", key="location")
+        filename = st.text_input("Output Filename", f"{company}_prompt.txt", key="filename")
 
     with col2:
-        industry = st.selectbox("Industry", industries)
-        persona = st.selectbox("Persona", personas)
-        size = st.selectbox("Company Size", company_sizes)
-        tone = st.selectbox("Tone", tones)
-        solution = st.selectbox("Solution", solutions)
-
-    include_intro = st.checkbox("Include intro tag about how you found this lead")
-    intro_text = ""
-    if include_intro:
-        source = st.selectbox("Lead Source", lead_sources)
-        if source == "Other":
-            custom_source = st.text_input("Custom Source")
-            intro_text = f"I came across your name while reviewing opportunities via {custom_source.strip()}."
-        else:
-            intro_text = f"I came across your name while reviewing opportunities via {source}."
+        industry = st.selectbox("Industry", industries, key="industry")
+        persona = st.selectbox("Persona", personas, key="persona")
+        size = st.selectbox("Company Size", company_sizes, key="size")
+        tone = st.selectbox("Tone", tones, key="tone")
+        solution = st.selectbox("Solution", solutions, key="solution")
 
     submitted = st.form_submit_button("Generate Prompt")
 
@@ -151,9 +137,12 @@ if submitted:
     industry_context = industry_snippets.get(industry, "")
     persona_context = persona_snippets.get(persona, "")
     final_prompt = header.strip()
-    if intro_text:
-        final_prompt += f"\n\n{intro_text}"
     final_prompt += f"\n\n{industry_context}\n\n{persona_context}"
 
     st.success("Prompt generated! Use the button below to download.")
     st.download_button("Download Prompt File", final_prompt.encode("utf-8"), file_name=filename, mime="text/plain")
+
+    # Clear fields
+    for key in ["company", "lead", "title", "location", "filename", "industry", "persona", "size", "tone", "solution"]:
+        st.session_state[key] = ""
+    st.rerun()
