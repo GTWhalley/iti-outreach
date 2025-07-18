@@ -118,7 +118,7 @@ with st.form("prompt_form"):
         lead = st.text_input("Lead Name")
         title = st.text_input("Job Title")
         location = st.text_input("Location")
-        filename = st.text_input("Output Filename", f"{company}_prompt.txt")
+        
 
     with col2:
         industry = st.selectbox("Industry", industries)
@@ -130,8 +130,7 @@ with st.form("prompt_form"):
     submitted = st.form_submit_button("Generate Prompt")
 
 if submitted:
-    if not filename.endswith(".txt"):
-        filename += ".txt"
+    
     header = get_prompt_header(lead, company, location, title, persona, size, industry, tone, solution)
     industry_context = industry_snippets.get(industry, "")
     persona_context = persona_snippets.get(persona, "")
